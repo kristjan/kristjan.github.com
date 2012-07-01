@@ -5,14 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hopefully Helpful</title>
+  <title>How to Disassociate Your Google Account From Someone Else's - Hopefully Helpful</title>
   <meta name="author" content="Kristján">
 
   
-  <meta name="description" content="To facilitate setup of new machines, I keep configuration on GitHub at
-kristjan/.dotfiles and
-kristjan/.vim. This way, all I have to do to
-set up my &hellip;">
+  <meta name="description" content="I frequently get emailed new account information by people who are some subset
+of [confused, foreign, children] and believe that my email address is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +19,7 @@ set up my &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://kristjan.github.com">
+  <link rel="canonical" href="http://kristjan.github.com/blog/2012/03/12/how-to-disassociate-your-google-account-from-someone-elses">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,108 +75,12 @@ set up my &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/06/30/sharing-environment-between-machines/">Sharing Environment Between Machines</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-30T12:49:00-07:00" pubdate data-updated="true">Jun 30<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>To facilitate setup of new machines, I keep configuration on GitHub at
-<a href="https://github.com/kristjan/.dotfiles">kristjan/.dotfiles</a> and
-<a href="https://github.com/kristjan/.vim">kristjan/.vim</a>. This way, all I have to do to
-set up my environment is install Git and clone those repos. <code>.dotfiles</code> comes
-with an install script that just symlinks each dotfile from <code>~/.dotfiles/$FILE</code>
-to <code>~/$FILE</code>.</p>
-
-<p>A problem, though, is that some tools&mdash;like things that talk to
-GitHub&mdash;need a private token or other data to exist somewhere in my
-configuration. I can&#8217;t go putting those in a public repo, so until now I&#8217;ve had
-to either look them up or copy them from an old machine. This time, the old
-machine is my old laptop sitting at home and available via SSH thanks to Back to
-my Mac. Rather than remember the ID BTMM assigns me as part of its lengthy
-hostname, I have another environment variable that also doesn&#8217;t belong in a
-repo. These things were sitting in my configs where I had to <code>git patch</code> around
-them and ran the risk of at some point accidentally pushing them out.</p>
-
-<p>The solution I&#8217;ve landed on is to store these in Dropbox and load them before
-the rest of my configs and helpers. The top of my <code>.bashrc</code> looks like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>HELPERS="
-</span><span class='line'>  Dropbox/.env
-</span><span class='line'>  .aliases
-</span><span class='line'>  .functions
-</span><span class='line'>  .nvm/nvm.sh
-</span><span class='line'>"
-</span><span class='line'>
-</span><span class='line'>for helper in $HELPERS; do
-</span><span class='line'>  if [ -f $HOME/$helper ]; then
-</span><span class='line'>    . $HOME/$helper
-</span><span class='line'>  fi
-</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And <code>Dropbox/.env</code> contains:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>export GITHUB_TOKEN=&lt;token&gt;
-</span><span class='line'>export BOBBLE_HOST=bobble.&lt;id&gt;.members.btmm.icloud.com</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now my configs are public and easy to trade with people (which I do regularly to
-learn new tricks), but private or irrelevant data is safely where only I can see
-it (assuming the integrity of Dropbox). During setup, I just install Dropbox
-before I clone my dotfiles, and everything is slightly more magical.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/12/how-to-disassociate-your-google-account-from-someone-elses/">How to Disassociate Your Google Account From Someone Else&#8217;s</a></h1>
+      <h1 class="entry-title">How to Disassociate Your Google Account From Someone Else's</h1>
     
     
       <p class="meta">
@@ -201,7 +103,7 @@ before I clone my dotfiles, and everything is slightly more magical.</p>
   </header>
 
 
-  <div class="entry-content"><p>I frequently get emailed new account information by people who are some subset
+<div class="entry-content"><p>I frequently get emailed new account information by people who are some subset
 of [confused, foreign, children] and believe that my email address is their
 email address. What I didn’t realize, or perhaps noticed but promptly forgot, is
 that 10 solid people had used my GMail address as the backup address when they
@@ -238,18 +140,61 @@ recommending that they be more careful in the future. I only hope they speak
 English / read it properly, because otherwise I’m sure to get a good set of
 interesting, upset replies.</p>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Kristján</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2012-03-12T23:33:00-07:00" pubdate data-updated="true">Mar 12<span>th</span>, 2012</time>
+      
+
+<span class="categories">
   
-  <div class="pagination">
+    <a class='category' href='/blog/categories/google/'>Google</a>, <a class='category' href='/blog/categories/security/'>security</a>
+  
+</span>
+
+
+    </p>
     
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://kristjan.github.com/blog/2012/03/12/how-to-disassociate-your-google-account-from-someone-elses/" data-via="kripet" data-counturl="http://kristjan.github.com/blog/2012/03/12/how-to-disassociate-your-google-account-from-someone-elses/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/06/30/sharing-environment-between-machines/" title="Next Post: Sharing environment between machines">Sharing environment between machines &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -261,7 +206,7 @@ interesting, upset replies.</p>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/03/12/how-to-disassociate-your-google-account-from-someone-elses/">How to Disassociate Your Google Account From Someone Else&#8217;s</a>
+        <a href="/blog/2012/03/12/how-to-disassociate-your-google-account-from-someone-elses/">How to Disassociate Your Google Account From Someone Else's</a>
       </li>
     
   </ul>
@@ -270,7 +215,7 @@ interesting, upset replies.</p>
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/kristjan">@kristjan</a> on GitHub
@@ -300,7 +245,7 @@ interesting, upset replies.</p>
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -328,6 +273,7 @@ interesting, upset replies.</p>
 
   
 </aside>
+
 
     </div>
   </div>

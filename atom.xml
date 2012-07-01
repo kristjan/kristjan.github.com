@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Hopefully Helpful]]></title>
+  <link href="http://kristjan.github.com/atom.xml" rel="self"/>
+  <link href="http://kristjan.github.com/"/>
+  <updated>2012-06-30T13:22:20-07:00</updated>
+  <id>http://kristjan.github.com/</id>
+  <author>
+    <name><![CDATA[Kristján]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Sharing environment between machines]]></title>
+    <link href="http://kristjan.github.com/blog/2012/06/30/sharing-environment-between-machines/"/>
+    <updated>2012-06-30T12:49:00-07:00</updated>
+    <id>http://kristjan.github.com/blog/2012/06/30/sharing-environment-between-machines</id>
+    <content type="html"><![CDATA[<p>To facilitate setup of new machines, I keep configuration on GitHub at
+<a href="https://github.com/kristjan/.dotfiles">kristjan/.dotfiles</a> and
+<a href="https://github.com/kristjan/.vim">kristjan/.vim</a>. This way, all I have to do to
+set up my environment is install Git and clone those repos. <code>.dotfiles</code> comes
+with an install script that just symlinks each dotfile from <code>~/.dotfiles/$FILE</code>
+to <code>~/$FILE</code>.</p>
+
+<p>A problem, though, is that some tools&mdash;like things that talk to
+GitHub&mdash;need a private token or other data to exist somewhere in my
+configuration. I can&#8217;t go putting those in a public repo, so until now I&#8217;ve had
+to either look them up or copy them from an old machine. This time, the old
+machine is my old laptop sitting at home and available via SSH thanks to Back to
+my Mac. Rather than remember the ID BTMM assigns me as part of its lengthy
+hostname, I have another environment variable that also doesn&#8217;t belong in a
+repo. These things were sitting in my configs where I had to <code>git patch</code> around
+them and ran the risk of at some point accidentally pushing them out.</p>
+
+<p>The solution I&#8217;ve landed on is to store these in Dropbox and load them before
+the rest of my configs and helpers. The top of my <code>.bashrc</code> looks like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>HELPERS="
+</span><span class='line'>  Dropbox/.env
+</span><span class='line'>  .aliases
+</span><span class='line'>  .functions
+</span><span class='line'>  .nvm/nvm.sh
+</span><span class='line'>"
+</span><span class='line'>
+</span><span class='line'>for helper in $HELPERS; do
+</span><span class='line'>  if [ -f $HOME/$helper ]; then
+</span><span class='line'>    . $HOME/$helper
+</span><span class='line'>  fi
+</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And <code>Dropbox/.env</code> contains:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export GITHUB_TOKEN=&lt;token&gt;
+</span><span class='line'>export BOBBLE_HOST=bobble.&lt;id&gt;.members.btmm.icloud.com</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now my configs are public and easy to trade with people (which I do regularly to
+learn new tricks), but private or irrelevant data is safely where only I can see
+it (assuming the integrity of Dropbox). During setup, I just install Dropbox
+before I clone my dotfiles, and everything is slightly more magical.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to Disassociate Your Google Account From Someone Else's]]></title>
+    <link href="http://kristjan.github.com/blog/2012/03/12/how-to-disassociate-your-google-account-from-someone-elses/"/>
+    <updated>2012-03-12T23:33:00-07:00</updated>
+    <id>http://kristjan.github.com/blog/2012/03/12/how-to-disassociate-your-google-account-from-someone-elses</id>
+    <content type="html"><![CDATA[<p>I frequently get emailed new account information by people who are some subset
+of [confused, foreign, children] and believe that my email address is their
+email address. What I didn’t realize, or perhaps noticed but promptly forgot, is
+that 10 solid people had used my GMail address as the backup address when they
+created their Google account. This is the address to which you can send a
+password reset should you ever lose access to your main account.</p>
+
+<p>There is a rather large security flaw in this system, though granted one only
+brought on by user error: None of these 10 accounts were verified by me as being
+validly attached to their primary account. That is, when the confused user
+listed my address as secondary, I either did not receive a confirmation email
+before the two could be linked, or I certainly ignored it. The result is that
+by virtue of a simple typo, a stranger can get full access to your GMail
+account, and by extension probably everything you do online.</p>
+
+<p>Not only that, but you can find out which accounts list yours as the secondary,
+so even in the absence of verification notifications, a complete set of
+exploitable accounts is readily available.</p>
+
+<p>Happily for these 10 hapless internet users, I was not in a playful/evil mood
+when I discovered this, so I spent the past 15 minutes severing the connections.
+Which, by the way, is somewhat roundabout unless I missed a page.</p>
+
+<ol>
+<li>Enter your email address at
+<a href="https://www.google.com/accounts/ForgotPasswd?service=mail&amp;fuOnly=1">https://www.google.com/accounts/ForgotPasswd?service=mail&amp;fuOnly=1</a></li>
+<li>For each address sent to you, request a password reset from
+<a href="https://www.gmail.com">GMail</a>, or some other Google login</li>
+<li>At the bottom of each password reset email is a link to disavow the account</li>
+</ol>
+
+
+<p>I also sent these folks a nice email describing what had happened and
+recommending that they be more careful in the future. I only hope they speak
+English / read it properly, because otherwise I’m sure to get a good set of
+interesting, upset replies.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Dropbox | Hopefully Helpful]]></title>
+  <link href="http://kristjan.github.com/blog/categories/dropbox/atom.xml" rel="self"/>
+  <link href="http://kristjan.github.com/"/>
+  <updated>2012-06-30T13:22:20-07:00</updated>
+  <id>http://kristjan.github.com/</id>
+  <author>
+    <name><![CDATA[Kristján]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Sharing environment between machines]]></title>
+    <link href="http://kristjan.github.com/blog/2012/06/30/sharing-environment-between-machines/"/>
+    <updated>2012-06-30T12:49:00-07:00</updated>
+    <id>http://kristjan.github.com/blog/2012/06/30/sharing-environment-between-machines</id>
+    <content type="html"><![CDATA[<p>To facilitate setup of new machines, I keep configuration on GitHub at
+<a href="https://github.com/kristjan/.dotfiles">kristjan/.dotfiles</a> and
+<a href="https://github.com/kristjan/.vim">kristjan/.vim</a>. This way, all I have to do to
+set up my environment is install Git and clone those repos. <code>.dotfiles</code> comes
+with an install script that just symlinks each dotfile from <code>~/.dotfiles/$FILE</code>
+to <code>~/$FILE</code>.</p>
+
+<p>A problem, though, is that some tools&mdash;like things that talk to
+GitHub&mdash;need a private token or other data to exist somewhere in my
+configuration. I can't go putting those in a public repo, so until now I've had
+to either look them up or copy them from an old machine. This time, the old
+machine is my old laptop sitting at home and available via SSH thanks to Back to
+my Mac. Rather than remember the ID BTMM assigns me as part of its lengthy
+hostname, I have another environment variable that also doesn't belong in a
+repo. These things were sitting in my configs where I had to <code>git patch</code> around
+them and ran the risk of at some point accidentally pushing them out.</p>
+
+<p>The solution I've landed on is to store these in Dropbox and load them before
+the rest of my configs and helpers. The top of my <code>.bashrc</code> looks like this:</p>
+
+<p>```
+HELPERS="
+  Dropbox/.env
+  .aliases
+  .functions
+  .nvm/nvm.sh
+"</p>
+
+<p>for helper in $HELPERS; do
+  if [ -f $HOME/$helper ]; then</p>
+
+<pre><code>. $HOME/$helper
+</code></pre>
+
+<p>  fi
+done
+```</p>
+
+<p>And <code>Dropbox/.env</code> contains:</p>
+
+<p><code>
+export GITHUB_TOKEN=&lt;token&gt;
+export BOBBLE_HOST=bobble.&lt;id&gt;.members.btmm.icloud.com
+</code></p>
+
+<p>Now my configs are public and easy to trade with people (which I do regularly to
+learn new tricks), but private or irrelevant data is safely where only I can see
+it (assuming the integrity of Dropbox). During setup, I just install Dropbox
+before I clone my dotfiles, and everything is slightly more magical.</p>
+]]></content>
+  </entry>
+  
+</feed>
